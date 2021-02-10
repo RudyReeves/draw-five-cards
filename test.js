@@ -3,9 +3,12 @@
  * Pick five random cards from a standard deck of playing cards.
 **/
 
-// Here are my two solutions in JavaScript, beginning with the more obvious one:
-// Helper functions:
+// Here are my two solutions in JavaScript, beginning some helper functions:
 
+/***
+ * Generates and returns an array of 52 unique playing cards,
+ * where each card is of the form {rank: [1-4], suit: [1-13]}.
+**/
 const getNewDeck = () => {
     const deck = [];
     for (let suit = 1; suit <= 4; suit++) {
@@ -16,6 +19,9 @@ const getNewDeck = () => {
     return deck;
 };
 
+/***
+ * Formats a card for display and returns a string representing the card.
+**/
 const formatCard = ({rank, suit}) => {
     const suitNames = {
         1: 'Hearts',
@@ -33,33 +39,35 @@ const formatCard = ({rank, suit}) => {
 };
 
 /***
- * Shuffles the `deck` and take the first `n` cards.
- * Requires memorizing or looking up a shuffling algorithm.
+ * Shuffles an array and returns it, modified.
 **/
-const drawCardsWithShuffledDeck = (deck, n) => {
-    const shuffled = shuffleArray(deck);
-    return [shuffled.splice(0, n), shuffled];
-};
-
 const shuffleArray = (arr) => {
     let currentIndex = arr.length, temporaryValue, randomIndex;
-
+    
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = arr[currentIndex];
-      arr[currentIndex] = arr[randomIndex];
-      arr[randomIndex] = temporaryValue;
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        
+        // And swap it with the current element.
+        temporaryValue = arr[currentIndex];
+        arr[currentIndex] = arr[randomIndex];
+        arr[randomIndex] = temporaryValue;
     }
-  
+    
     return arr;
 };
 
 /***
+ * Solution 1:
+ * Shuffles the `deck` and takes the first `n` cards.
+ * Requires memorizing or looking up a shuffling algorithm.
+**/
+const drawCardsWithShuffledDeck = (deck, n) => [deck.splice(0, n), deck];
+
+/***
+ * Solution 2:
  * Removes one random card at a time and maintains a copy
  * of the `deck` as it shrinks. Might do excessive copies.
 **/
