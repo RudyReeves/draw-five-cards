@@ -1,6 +1,11 @@
-// Pick five random cards from a standard deck of playing cards.
+/***
+ * Problem Statement:
+ * Pick five random cards from a standard deck of playing cards.
+**/
 
+// Here are my two solutions in JavaScript, beginning with the more obvious one:
 // Helper functions:
+
 const getNewDeck = () => {
     const deck = [];
     for (let suit = 1; suit <= 4; suit++) {
@@ -27,8 +32,10 @@ const formatCard = ({rank, suit}) => {
     return `${rankNames[rank] || rank} of ${suitNames[suit]}`;
 };
 
-// Solution 1: Shuffle the deck and take the first five.
-// Requires memorizing or looking up a shuffling algorithm.
+/***
+ * Shuffles the `deck` and take the first `n` cards.
+ * Requires memorizing or looking up a shuffling algorithm.
+**/
 const drawCardsWithShuffledDeck = (deck, n) => {
     const shuffled = shuffleArray(deck);
     return [shuffled.splice(0, n), shuffled];
@@ -52,8 +59,10 @@ const shuffleArray = (arr) => {
     return arr;
 };
 
-// Solution 2: Remove one random card at a time and maintain a copy
-// of the ever-shrinking array.
+/***
+ * Removes one random card at a time and maintains a copy
+ * of the `deck` as it shrinks. Might do excessive copies.
+**/
 const getRandomIndex = (arr) =>
     Math.floor(Math.random() * arr.length) - 1;
 
