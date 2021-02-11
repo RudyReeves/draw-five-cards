@@ -3,7 +3,47 @@
  * Pick five random cards from a standard deck of playing cards.
 **/
 
-// Here are my two solutions in JavaScript, beginning some helper functions:
+// Here are my two solutions in JavaScript, beginning with the most obvious:
+// (Helper functions are defined at the bottom.)
+
+/***
+ * Solution 1:
+ * Shuffles the `deck` and takes the first `n` cards.
+**/
+const drawCardsWithShuffling = (deck, n = 5) => {
+    const shuffledDeck = shuffleArray(deck);
+    return [shuffledDeck.splice(0, n), shuffledDeck];
+};
+
+/***
+ * Solution 2:
+ * Removes one random card at a time and maintains a copy
+ * of the `deck` as it shrinks. Might do excessive copies.
+**/
+const drawCards = (deck, n = 5) => {
+    const cards = [];
+    for (let i = 0; i < n; i++) {
+        const [card, newDeck] = removeRandomElement(deck);
+        deck = newDeck;
+        cards.push(card);
+    }
+    return [cards, deck];
+};
+
+const [hand, deck] = drawCards(getNewDeck());
+const [hand2, deck2] = drawCardsWithShuffling(getNewDeck());
+
+// Tests:
+// `hand` is the array of five randomly selected cards
+// `deck` is the remaining 47 cards in the deck
+
+console.log(hand.map(formatCard)); // pass (five random cards)
+console.log(deck.length); // pass (47)
+
+console.log(hand2.map(formatCard)); // pass (five random cards)
+console.log(deck2.length); // pass (47)
+
+// Helper functions:
 
 /***
  * Generates and returns an array of 52 unique playing cards,
@@ -40,6 +80,7 @@ const formatCard = ({rank, suit}) => {
 
 /***
  * Shuffles an array and returns it, modified.
+ * This likely needs to be memorized or looked up.
 **/
 const shuffleArray = (arr) => {
     let currentIndex = arr.length, temporaryValue, randomIndex;
@@ -60,41 +101,14 @@ const shuffleArray = (arr) => {
 };
 
 /***
- * Solution 1:
- * Shuffles the `deck` and takes the first `n` cards.
- * Requires memorizing or looking up a shuffling algorithm.
-**/
-const drawCardsWithShuffledDeck = (deck, n) => [deck.splice(0, n), deck];
-
-/***
- * Solution 2:
- * Removes one random card at a time and maintains a copy
- * of the `deck` as it shrinks. Might do excessive copies.
+ * Returns a random index for `arr`.
 **/
 const getRandomIndex = (arr) =>
     Math.floor(Math.random() * arr.length) - 1;
 
+/***
+ * Removes a random element from `arr` and returns
+ * the removed element and the rest of `arr` as a pair.
+**/
 const removeRandomElement = (arr) =>
     [arr.splice(getRandomIndex(arr), 1)[0], arr];
-
-const drawCards = (deck, n) => {
-    const cards = [];
-    for (let i = 0; i < n; i++) {
-        const [card, newDeck] = removeRandomElement(deck);
-        deck = newDeck;
-        cards.push(card);
-    }
-    return [cards, deck];
-};
-
-const [hand, deck] = drawCards(getNewDeck(), 5);
-const [hand2, deck2] = drawCardsWithShuffledDeck(shuffleArray(getNewDeck()), 5);
-
-// `hand` is the array of five randomly selected cards
-// `deck` is the remaining 47 cards in the deck
-
-console.log(hand.map(formatCard)); // pass (five random cards)
-console.log(deck.length); // pass (47)
-
-console.log(hand2.map(formatCard)); // pass (five random cards)
-console.log(deck2.length); // pass (47)
