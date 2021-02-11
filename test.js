@@ -30,20 +30,7 @@ const drawCards = (deck, n = 5) => {
     return [cards, deck];
 };
 
-const [hand, deck] = drawCards(getNewDeck());
-const [hand2, deck2] = drawCardsWithShuffling(getNewDeck());
-
-// Tests:
-// `hand` is the array of five randomly selected cards
-// `deck` is the remaining 47 cards in the deck
-
-console.log(hand.map(formatCard)); // pass (five random cards)
-console.log(deck.length); // pass (47)
-
-console.log(hand2.map(formatCard)); // pass (five random cards)
-console.log(deck2.length); // pass (47)
-
-// Helper functions:
+// Helper functions (tests below):
 
 /***
  * Generates and returns an array of 52 unique playing cards,
@@ -112,3 +99,15 @@ const getRandomIndex = (arr) =>
 **/
 const removeRandomElement = (arr) =>
     [arr.splice(getRandomIndex(arr), 1)[0], arr];
+
+// Tests:
+// `hand` is the array of five randomly selected cards
+// `deck` is the remaining 47 cards in the deck
+const [hand, deck] = drawCards(getNewDeck());
+const [hand2, deck2] = drawCardsWithShuffling(getNewDeck());
+
+console.log(hand.map(formatCard)); // pass (five random cards)
+console.log(deck.length); // pass (47)
+
+console.log(hand2.map(formatCard)); // pass (five random cards)
+console.log(deck2.length); // pass (47)
