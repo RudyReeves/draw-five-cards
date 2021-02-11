@@ -4,7 +4,7 @@
 **/
 
 // Here are my two solutions in JavaScript, beginning with the most obvious:
-// (Helper functions are defined at the bottom.)
+// (Helper functions and tests are defined at the bottom.)
 
 /***
  * Solution 1:
@@ -30,7 +30,7 @@ const drawCards = (deck, n = 5) => {
     return [cards, deck];
 };
 
-// Helper functions (tests below):
+// Helper functions:
 
 /***
  * Generates and returns an array of 52 unique playing cards,
@@ -75,8 +75,8 @@ const shuffleArray = (arr) => {
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
         // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
+        randomIndex = getRandomIndex(currentIndex);
+        currentIndex--;
         
         // And swap it with the current element.
         temporaryValue = arr[currentIndex];
@@ -87,20 +87,21 @@ const shuffleArray = (arr) => {
     return arr;
 };
 
-/***
- * Returns a random index for `arr`.
-**/
-const getRandomIndex = (arr) =>
-    Math.floor(Math.random() * arr.length) - 1;
+/** Return a random int between [0, length - 1], or a random
+ * index or an array of the given `length`.
+ */
+const getRandomIndex = (length) =>
+    Math.floor(Math.random() * length);
 
 /***
  * Removes a random element from `arr` and returns
  * the removed element and the rest of `arr` as a pair.
 **/
 const removeRandomElement = (arr) =>
-    [arr.splice(getRandomIndex(arr), 1)[0], arr];
+    [arr.splice(getRandomIndex(arr.length), 1)[0], arr];
 
 // Tests:
+
 // `hand` is the array of five randomly selected cards
 // `deck` is the remaining 47 cards in the deck
 const [hand, deck] = drawCards(getNewDeck());
