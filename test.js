@@ -67,28 +67,20 @@ const formatCard = ({rank, suit}) => {
 
 /***
  * Shuffles an array and returns it, modified.
- * This likely needs to be memorized or looked up.
 **/
 const shuffleArray = (arr) => {
-    let currentIndex = arr.length, temporaryValue, randomIndex;
-    
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-        // Pick a remaining element...
-        randomIndex = getRandomIndex(currentIndex);
-        currentIndex--;
-        
-        // And swap it with the current element.
-        temporaryValue = arr[currentIndex];
-        arr[currentIndex] = arr[randomIndex];
+    for (let i = arr.length; i > 0; i--) {
+        let randomIndex = getRandomIndex(i);
+        // Swap element at index `i` with the one at `randomIndex`:
+        let temporaryValue = arr[i];
+        arr[i] = arr[randomIndex];
         arr[randomIndex] = temporaryValue;
     }
-    
     return arr;
 };
 
-/** Return a random int between [0, length - 1], or a random
- * index or an array of the given `length`.
+/** Returns a random array index of given `length`,
+ * i.e., a random int in range [0, length - 1]
  */
 const getRandomIndex = (length) =>
     Math.floor(Math.random() * length);
